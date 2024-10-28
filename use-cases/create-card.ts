@@ -6,7 +6,7 @@ export async function createCard(
   cardData: CardData,
   imageUrl: string,
 ) {
-  const { card_title, card_description, boardId, assignees } = cardData;
+  const { card_title, card_description, boardId } = cardData;
   const res = await fetch("https://api.notion.com/v1/pages", {
     method: "POST",
     headers: {
@@ -27,9 +27,6 @@ export async function createCard(
           select: {
             name: "Not started",
           },
-        },
-        Assignee: {
-          people: [...assignees],
         },
       },
       children: [

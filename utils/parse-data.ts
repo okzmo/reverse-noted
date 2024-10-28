@@ -11,7 +11,6 @@ export interface CardData {
     width: number;
     height: number;
   };
-  assignees: any[];
   boardId: string;
 }
 
@@ -21,7 +20,6 @@ export function parseCardData(formData: FormData) {
   const card_title = formData.get("card_title");
   const card_description = formData.get("card_description");
   const selectionCoords = formData.get("selectionCoords");
-  const assignees = formData.get("assignees");
   const boardId = formData.get("boardId");
 
   if (
@@ -30,7 +28,6 @@ export function parseCardData(formData: FormData) {
     !card_title ||
     !card_description ||
     !selectionCoords ||
-    !assignees ||
     !boardId
   ) {
     throw new errors.MissingDataError(404, "Missing required data");
@@ -42,7 +39,6 @@ export function parseCardData(formData: FormData) {
     card_title: card_title as string,
     card_description: card_description as string,
     selectionCoords: JSON.parse(selectionCoords as string),
-    assignees: JSON.parse(assignees as string),
     boardId: boardId as string,
   };
 

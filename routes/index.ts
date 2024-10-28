@@ -1,4 +1,3 @@
-import membersHandler from "./members/index.ts";
 import createCardHandler from "./create-card/index.ts";
 import { cors, corsHeaders } from "../lib/cors.ts";
 
@@ -15,9 +14,6 @@ export async function setupRoutes(req: Request) {
   const routeKey = `${method} ${pathname}`;
 
   switch (routeKey) {
-    case "GET /members":
-      response = await membersHandler(req);
-      break;
     case "POST /create-card":
       response = await createCardHandler(req);
       break;
