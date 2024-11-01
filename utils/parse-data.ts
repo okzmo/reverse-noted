@@ -1,8 +1,6 @@
 import * as errors from "../lib/errors.ts";
 
 export interface CardData {
-  image: string;
-  dpr: number;
   card_title: string;
   card_description: string;
   selectionCoords: {
@@ -12,34 +10,44 @@ export interface CardData {
     height: number;
   };
   boardId: string;
+  name: string;
+  location: string;
+  viewportHeight: number;
+  viewportWidth: number;
 }
 
 export function parseCardData(formData: FormData) {
-  const image = formData.get("image");
-  const dpr = formData.get("dpr");
   const card_title = formData.get("card_title");
   const card_description = formData.get("card_description");
   const selectionCoords = formData.get("selectionCoords");
   const boardId = formData.get("boardId");
+  const name = formData.get("name");
+  const location = formData.get("location");
+  const viewportHeight = formData.get("viewportHeight");
+  const viewportWidth = formData.get("viewportWidth");
 
   if (
-    !image ||
-    !dpr ||
     !card_title ||
     !card_description ||
     !selectionCoords ||
-    !boardId
+    !boardId ||
+    !name ||
+    !location ||
+    !viewportHeight ||
+    !viewportWidth
   ) {
     throw new errors.MissingDataError(404, "Missing required data");
   }
 
   const cardData: CardData = {
-    image: image as string,
-    dpr: Number(dpr),
     card_title: card_title as string,
     card_description: card_description as string,
     selectionCoords: JSON.parse(selectionCoords as string),
     boardId: boardId as string,
+    name: name as string,
+    location: location as string,
+    viewportHeight: Number(viewportHeight),
+    viewportWidth: Number(viewportWidth),
   };
 
   return cardData;

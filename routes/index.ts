@@ -1,5 +1,6 @@
 import createCardHandler from "./create-card/index.ts";
 import { cors, corsHeaders } from "../lib/cors.ts";
+import getCardsHandler from "./get-cards/index.ts";
 
 export async function setupRoutes(req: Request) {
   const origin = req.headers.get("Origin") || "*";
@@ -16,6 +17,9 @@ export async function setupRoutes(req: Request) {
   switch (routeKey) {
     case "POST /create-card":
       response = await createCardHandler(req);
+      break;
+    case "POST /get-cards":
+      response = await getCardsHandler(req);
       break;
     default:
       response = new Response("Hello World!");

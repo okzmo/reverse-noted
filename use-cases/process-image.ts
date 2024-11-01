@@ -8,13 +8,14 @@ import type { CardData } from "../utils/parse-data.ts";
 const S3_BUCKET_NAME = Deno.env.get("S3_BUCKET_NAME")!;
 
 export async function processAndUploadImage(cardData: CardData) {
-  const { image, dpr, selectionCoords } = cardData;
+  const { selectionCoords, location, viewportWidth, viewportHeight } = cardData;
   const s3 = createS3Client();
   const fileName = `${randomId()}.png`;
   const croppedImage = await cropImage({
-    image: image,
-    dpr: dpr,
     selectionCoords: selectionCoords,
+    url: location,
+    viewportWidth: viewportWidth,
+    viewportHeight: viewportHeight,
   });
 
   s3.send(
